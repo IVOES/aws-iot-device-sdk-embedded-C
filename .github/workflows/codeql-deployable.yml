@@ -85,4 +85,10 @@ jobs:
       uses: github/codeql-action/analyze@v2
       with:
         category: "/language:${{matrix.language}}"
+      id: step1
 
+    - name: Archive CodeQL results
+      uses: actions/upload-artifact@v3
+      with:
+        name: codeql-results
+        path: ${{ steps.step1.outputs.sarif-output}}
