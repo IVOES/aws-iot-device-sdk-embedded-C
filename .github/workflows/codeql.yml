@@ -99,7 +99,7 @@ jobs:
           -**:cpp/leap-year/*
           -**:cpp/ambiguously-signed-bit-field
           -**/third_party/**
-          -**/3rd/**
+          -**/3rd*party/**
           -**/external/**
         input: ${{ steps.step1.outputs.sarif-output }}/cpp.sarif
         output: ${{ steps.step1.outputs.sarif-output }}/cpp.sarif
