@@ -85,7 +85,9 @@ jobs:
         upload: false
       id: step1
 
-    - name: Filter out uninteresting errors and warnings
+    # Filter out rules with low severity or high false positve rate
+    # Also filter out warnings in third-party code
+    - name: Filter out unwanted errors and warnings
       uses: advanced-security/filter-sarif@v1
       with:
         patterns: |
@@ -98,7 +100,10 @@ jobs:
           -**:cpp/comparison-with-wider-type
           -**:cpp/leap-year/*
           -**:cpp/ambiguously-signed-bit-field
-          -**/third_party/**
+          -**:cpp/suspicious-pointer-scaling
+          -**:cpp/suspicious-pointer-scaling-void
+          -**:cpp/unsigned-comparison-zero
+          -**/third*party/**
           -**/3rd*party/**
           -**/external/**
         input: ${{ steps.step1.outputs.sarif-output }}/cpp.sarif
