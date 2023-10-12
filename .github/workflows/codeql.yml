@@ -12,8 +12,8 @@
 name: "CodeQL"
 
 on:
-  #push:
-  #  branches: [ "main" ]
+  push:
+    branches: [ "main" ]
   pull_request:
     # The branches below must be a subset of the branches above
     branches: [ "main" ]
@@ -103,9 +103,21 @@ jobs:
           -**:cpp/suspicious-pointer-scaling
           -**:cpp/suspicious-pointer-scaling-void
           -**:cpp/unsigned-comparison-zero
-          -**/third*party/**
-          -**/3rd*party/**
-          -**/external/**
+          -libraries/3rdparty/CMock
+          -libraries/standard/coreMQTT
+          -libraries/standard/coreHTTP
+          -libraries/standard/coreJSON
+          -libraries/aws/device-shadow-for-aws-iot-embedded-sdk
+          -libraries/aws/jobs-for-aws-iot-embedded-sdk
+          -libraries/aws/device-defender-for-aws-iot-embedded-sdk
+          -libraries/standard/corePKCS11
+          -libraries/standard/backoffAlgorithm
+          -libraries/aws/ota-for-aws-iot-embedded-sdk
+          -demos/jobs/jobs_demo_mosquitto/libmosquitto
+          -libraries/aws/fleet-provisioning-for-aws-iot-embedded-sdk
+          -libraries/3rdparty/tinycbor
+          -libraries/aws/sigv4-for-aws-iot-embedded-sdk
+          -libraries/3rdparty/mbedtls
         input: ${{ steps.step1.outputs.sarif-output }}/cpp.sarif
         output: ${{ steps.step1.outputs.sarif-output }}/cpp.sarif
 
