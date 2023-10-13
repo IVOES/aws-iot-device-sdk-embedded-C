@@ -10,11 +10,23 @@ def codeql_sarif_contain_error(filename):
 
     for run in s.get('runs', []):
         rules_metadata = run['tool']['driver']['rules']
+        if not rules_metadata:
+            rules_metadata = run['tool']['extensions'][0]['rules']
+
         for res in run.get('results', []):
-            rule_index = res['ruleIndex']
-            rule_level = rules_metadata[rule_index]['defaultConfiguration']['level']
-            if rule_level == 'error':
-                return True
+            if 'ruleIndex' in res:
+                rule_index = res['ruleIndex']
+            elif 'rule' in res and 'index' in res['rule']:
+                rule_index = res['rule']['index']
+            else:
+                continue
+            try:
+                rule_level = rules_metadata[rule_index]['defaultConfiguration']['level']
+            except IndexError as e:
+                print(e, rule_index, len(rules_metadata))
+            else:
+                if rule_level == 'error':
+                    return True
     return False
 
 if __name__ == "__main__":
