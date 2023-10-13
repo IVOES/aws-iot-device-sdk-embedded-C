@@ -103,6 +103,7 @@ jobs:
           -**:cpp/suspicious-pointer-scaling
           -**:cpp/suspicious-pointer-scaling-void
           -**:cpp/unsigned-comparison-zero
+          -**/cmake*/Modules/**
           -libraries/3rdparty/CMock/**
           -libraries/standard/coreMQTT/**
           -libraries/standard/coreHTTP/**
