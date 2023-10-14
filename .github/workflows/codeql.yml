@@ -86,7 +86,7 @@ jobs:
       id: step1
 
     # Filter out rules with low severity or high false positve rate
-    # Also filter out warnings in third-party code
+    # Also filter out warnings in submodules
     - name: Filter out unwanted errors and warnings
       uses: advanced-security/filter-sarif@v1
       with:
@@ -104,7 +104,6 @@ jobs:
           -**:cpp/suspicious-pointer-scaling-void
           -**:cpp/unsigned-comparison-zero
           -**/cmake*/Modules/**
-          # Below are submodules
           -libraries/3rdparty/CMock/**
           -libraries/standard/coreMQTT/**
           -libraries/standard/coreHTTP/**
