@@ -13,7 +13,7 @@ name: "CodeQL"
 
 on:
   push:
-    branches: [ "main" ]
+    #branches: [ "main" ]
   pull_request:
     # The branches below must be a subset of the branches above
     branches: [ "main" ]
@@ -104,6 +104,7 @@ jobs:
           -**:cpp/suspicious-pointer-scaling-void
           -**:cpp/unsigned-comparison-zero
           -**/cmake*/Modules/**
+          # Below are submodules
           -libraries/3rdparty/CMock/**
           -libraries/standard/coreMQTT/**
           -libraries/standard/coreHTTP/**
@@ -122,13 +123,14 @@ jobs:
         input: ${{ steps.step1.outputs.sarif-output }}/cpp.sarif
         output: ${{ steps.step1.outputs.sarif-output }}/cpp.sarif
 
-    - name: Upload SARIF
+    - name: Upload CodeQL results to code scanning
       uses: github/codeql-action/upload-sarif@v2
       with:
         sarif_file: ${{ steps.step1.outputs.sarif-output }}
         category: "/language:${{matrix.language}}"
 
-    - name: Archive CodeQL results
+    - name: Upload CodeQL results as an artifact
+      if: success() || failure()
       uses: actions/upload-artifact@v3
       with:
         name: codeql-results
